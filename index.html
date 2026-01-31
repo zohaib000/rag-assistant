@@ -213,10 +213,51 @@
             margin: 0 auto;
             padding: 8rem 2rem 4rem;
             position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
         .orb { z-index: 0; }
         .hero > * { position: relative; z-index: 1; }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-video {
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 229, 255, 0.3);
+            border: 2px solid var(--border);
+            background: var(--card-bg);
+            transition: all 0.3s ease;
+        }
+
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 40px 100px rgba(0, 229, 255, 0.4);
+            border-color: var(--primary);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
         .hero-badge {
             display: inline-flex;
@@ -607,6 +648,11 @@
 
         /* Responsive */
         @media (max-width: 968px) {
+            .hero { 
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                padding: 4rem 2rem 2rem;
+            }
             .hero h1 { font-size: 3rem; }
             .hero-subtitle { font-size: 1.1rem; }
             .section-title { font-size: 2.5rem; }
@@ -643,31 +689,44 @@
 
     <main>
         <section class="hero">
-            <div class="hero-badge">
-                ⚡ FREE • PRIVACY-FIRST • CHROME EXTENSION
-            </div>
-            <h1>Your AI-Powered<br>Browser Assistant</h1>
-            <p class="hero-subtitle">Access GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and more. Analyze documents, search the web, and build custom AI assistants—all within your browser.</p>
-            
-            <div class="hero-cta">
-                <a href="https://chromewebstore.google.com/detail/rag-assistant-ai-chat-wit/lkifiifohmiopgnifmmjnngjhibnemgg" class="btn-primary" target="_blank">
-                    <span>Install Free Extension</span>
-                    <span>→</span>
-                </a>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    ⚡ FREE • PRIVACY-FIRST • CHROME EXTENSION
+                </div>
+                <h1>Your AI-Powered<br>Browser Assistant</h1>
+                <p class="hero-subtitle">Access GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and more. Analyze documents, search the web, and build custom AI assistants—all within your browser.</p>
+                
+                <div class="hero-cta">
+                    <a href="https://chromewebstore.google.com/detail/rag-assistant-ai-chat-wit/lkifiifohmiopgnifmmjnngjhibnemgg" class="btn-primary" target="_blank">
+                        <span>Install Free Extension</span>
+                        <span>→</span>
+                    </a>
+                </div>
+
+                <div class="stats-inline">
+                    <div class="stat-inline">
+                        <div class="stat-inline-number">5+</div>
+                        <div class="stat-inline-label">AI Models</div>
+                    </div>
+                    <div class="stat-inline">
+                        <div class="stat-inline-number">100%</div>
+                        <div class="stat-inline-label">Free Forever</div>
+                    </div>
+                    <div class="stat-inline">
+                        <div class="stat-inline-number">4</div>
+                        <div class="stat-inline-label">Interface Options</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="stats-inline">
-                <div class="stat-inline">
-                    <div class="stat-inline-number">5+</div>
-                    <div class="stat-inline-label">AI Models</div>
-                </div>
-                <div class="stat-inline">
-                    <div class="stat-inline-number">100%</div>
-                    <div class="stat-inline-label">Free Forever</div>
-                </div>
-                <div class="stat-inline">
-                    <div class="stat-inline-number">4</div>
-                    <div class="stat-inline-label">Interface Options</div>
+            <div class="hero-video">
+                <div class="video-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/XJinhiDY_zk?si=KTOATMLg22cFTMPK" 
+                        title="RAG Assistant Demo" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
                 </div>
             </div>
         </section>
