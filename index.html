@@ -213,10 +213,10 @@
             margin: 0 auto;
             padding: 8rem 2rem 4rem;
             position: relative;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            display: flex;
             align-items: center;
+            gap: 8rem;
+            justify-content: space-between;
         }
 
         .orb { z-index: 0; }
@@ -225,38 +225,148 @@
         .hero-content {
             position: relative;
             z-index: 1;
+            flex: 1;
+            max-width: 650px;
         }
 
-        .hero-video {
+        .hero-logo {
             position: relative;
             z-index: 1;
+            flex-shrink: 0;
         }
 
-        .video-container {
+        .hero-logo img {
+            width: 280px;
+            height: 280px;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 50px rgba(0, 229, 255, 0.4));
+            animation: float-logo 6s ease-in-out infinite;
+        }
+
+        @keyframes float-logo {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Showcase Section */
+        .showcase {
+            max-width: 980px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+        }
+
+        .video-demo {
             position: relative;
             width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
             padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 30px 80px rgba(0, 229, 255, 0.3);
-            border: 2px solid var(--border);
+            box-shadow: 0 30px 80px rgba(0, 229, 255, 0.4);
+            border: 3px solid var(--border);
             background: var(--card-bg);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .video-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 40px 100px rgba(0, 229, 255, 0.4);
+        .video-demo:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 40px 100px rgba(0, 229, 255, 0.5);
             border-color: var(--primary);
         }
 
-        .video-container iframe {
+        .video-demo iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .video-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease;
+        }
+
+        .video-thumbnail:hover::before {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .play-button {
+            width: 100px;
+            height: 100px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.5);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 30px solid var(--bg-dark);
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            margin-left: 8px;
+        }
+
+        .video-thumbnail:hover .play-button {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.7);
+        }
+
+        .video-demo.playing .video-thumbnail {
+            display: none;
+        }
+
+        .video-label {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .video-label h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-label p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
         }
 
         .hero-badge {
@@ -649,9 +759,16 @@
         /* Responsive */
         @media (max-width: 968px) {
             .hero { 
-                grid-template-columns: 1fr;
+                flex-direction: column;
                 gap: 3rem;
                 padding: 4rem 2rem 2rem;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero-logo img {
+                width: 200px;
+                height: 200px;
             }
             .hero h1 { font-size: 3rem; }
             .hero-subtitle { font-size: 1.1rem; }
@@ -660,14 +777,21 @@
             .stats-inline { flex-direction: column; gap: 1.5rem; }
             .models-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
             .features-grid { grid-template-columns: 1fr; }
+            .video-label h3 { font-size: 2rem; }
         }
 
         @media (max-width: 640px) {
             .hero { padding: 4rem 1.5rem 2rem; }
             .hero h1 { font-size: 2.2rem; }
+            .hero-logo img {
+                width: 150px;
+                height: 150px;
+            }
             nav { padding: 1rem 1.5rem; }
             .logo { font-size: 1.2rem; }
             .install-header { padding: 0.7rem 1.5rem; font-size: 0.85rem; }
+            .video-label h3 { font-size: 1.5rem; }
+            .video-label p { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -719,15 +843,27 @@
                 </div>
             </div>
 
-            <div class="hero-video">
-                <div class="video-container">
-                    <iframe 
-                        src="https://www.youtube.com/embed/XJinhiDY_zk?si=KTOATMLg22cFTMPK" 
-                        title="RAG Assistant Demo" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                    </iframe>
+            <div class="hero-logo">
+                <img src="https://raw.githubusercontent.com/zohaib000/rag-assistant/refs/heads/main/rag_logo.png" alt="RAG Assistant Logo">
+            </div>
+        </section>
+
+        <section class="showcase">
+            <div class="video-label">
+                <h3>See RAG Assistant in Action</h3>
+                <p>Watch how easy it is to build custom AI assistants</p>
+            </div>
+            <div class="video-demo" id="videoDemo">
+                <div class="video-thumbnail" style="background-image: url('https://img.youtube.com/vi/XJinhiDY_zk/maxresdefault.jpg');" onclick="playVideo()">
+                    <div class="play-button"></div>
                 </div>
+                <iframe 
+                    id="youtubeVideo"
+                    src="" 
+                    title="RAG Assistant Demo - Build Custom AI Assistants" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
             </div>
         </section>
 
@@ -849,6 +985,18 @@
     </footer>
 
     <script>
+        // Play video function
+        function playVideo() {
+            const videoDemo = document.getElementById('videoDemo');
+            const youtubeVideo = document.getElementById('youtubeVideo');
+            
+            // Load video with autoplay
+            youtubeVideo.src = 'https://www.youtube.com/embed/XJinhiDY_zk?autoplay=1&si=KTOATMLg22cFTMPK';
+            
+            // Hide thumbnail
+            videoDemo.classList.add('playing');
+        }
+
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
